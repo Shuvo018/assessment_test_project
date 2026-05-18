@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Test</title>
+</head>
+
+<body>
+    <h1>MCQ Test</h1>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        {% for question in questions %}
+        <div style="margin-bottom: 20px;">
+            <h3>{{ forloop.counter }}. {{ question.question_text }}</h3>
+
+           
+            <label>
+                <input type="radio" name="question_{{ question.id }}" value="A" required>
+                A: {{ question.choice_a }}
+            </label><br>
+
+            <label>
+                <input type="radio" name="question_{{ question.id }}" value="B">
+                B: {{ question.choice_b }}
+            </label><br>
+
+            <label>
+                <input type="radio" name="question_{{ question.id }}" value="C">
+                C: {{ question.choice_c }}
+            </label><br>
+
+            <label>
+                <input type="radio" name="question_{{ question.id }}" value="D">
+                D: {{ question.choice_d }}
+            </label><br>
+        </div>
+        {% endfor %}
+
+        <button type="submit">Submit Answers</button>
+    </form>
+
+    <h1>score: {{score}} </h1>
+    <h1>total: {{total}}</h1>
+</body>
+
+</html>
