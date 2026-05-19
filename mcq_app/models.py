@@ -27,3 +27,10 @@ class MCQQuestion(models.Model):
 
     def __str__(self):
         return self.question_text[:50]
+    
+class Result(models.Model):
+    stu_id = models.CharField(max_length=20)
+    score = models.IntegerField()
+
+    def __str__(self) -> str:
+        return self.score

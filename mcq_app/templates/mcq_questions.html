@@ -12,29 +12,32 @@
 
     <form method="POST" action="">
         {% csrf_token %}
-
+        <div>
+            <label for="">User ID: </label>
+            <input type="text" name="user_id">
+        </div>
         {% for question in questions %}
         <div style="margin-bottom: 20px;">
             <h3>{{ forloop.counter }}. {{ question.question_text }}</h3>
 
            
             <label>
-                <input type="radio" name="question_{{ question.id }}" value="A" required>
+                <input type="radio" name="question_{{ question.id }}" value="choice_a" required>
                 A: {{ question.choice_a }}
             </label><br>
 
             <label>
-                <input type="radio" name="question_{{ question.id }}" value="B">
+                <input type="radio" name="question_{{ question.id }}" value="choice_b">
                 B: {{ question.choice_b }}
             </label><br>
 
             <label>
-                <input type="radio" name="question_{{ question.id }}" value="C">
+                <input type="radio" name="question_{{ question.id }}" value="choice_c">
                 C: {{ question.choice_c }}
             </label><br>
 
             <label>
-                <input type="radio" name="question_{{ question.id }}" value="D">
+                <input type="radio" name="question_{{ question.id }}" value="choice_d">
                 D: {{ question.choice_d }}
             </label><br>
         </div>
