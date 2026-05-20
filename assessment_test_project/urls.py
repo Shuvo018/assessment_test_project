@@ -21,5 +21,5 @@ from mcq_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('mcq/', view=views.mcq_list, name='mcq_list'),
-    path('result/', view=views.resutl_list, name='result'),
+    path('submit/', view=views.submit, name='submit'),
 ]

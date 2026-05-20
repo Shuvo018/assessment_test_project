@@ -146,21 +146,17 @@ CACHES = {
     }
 }
 
-# CELERY_TIMEZONE = "Asia/Dhaka"
-# CELERY_TASK_TRACK_STARTED = True
-# CELERY_TASK_TIME_LIMIT = 30 * 60
-
 CELERY_WORKER_POOL = "threads"
-CELERY_WORKER_CONCURRENCY = 4
+CELERY_WORKER_CONCURRENCY = 12
 
 
 # from celery import Celery
 # from celery.schedules import crontab
 
-# CELERY_BEAT_SCHEDULE = {
 
-#     "bulk-insert-every-5-seconds": {
-#         "task": "mcq.tasks.bulk_insert_results",
-#         "schedule": 5.0,
-#     },
-# }
+CELERY_BEAT_SCHEDULE = {
+    "bulk-insert-every-10-seconds": {
+        "task": "mcq_app.tasks.bulk_insert_results",
+        "schedule": 10.0,
+    },
+}
