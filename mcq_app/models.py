@@ -33,4 +33,4 @@ class Result(models.Model):
     score = models.IntegerField()
 
     def __str__(self) -> str:
-        return self.score
+        return self.stu_id

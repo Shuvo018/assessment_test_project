@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mcq_app',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,40 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# settings.py
+
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# CELERY_TIMEZONE = "Asia/Dhaka"
+# CELERY_TASK_TRACK_STARTED = True
+# CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CELERY_WORKER_POOL = "threads"
+CELERY_WORKER_CONCURRENCY = 4
+
+
+# from celery import Celery
+# from celery.schedules import crontab
+
+# CELERY_BEAT_SCHEDULE = {
+
+#     "bulk-insert-every-5-seconds": {
+#         "task": "mcq.tasks.bulk_insert_results",
+#         "schedule": 5.0,
+#     },
+# }

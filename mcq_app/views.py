@@ -1,35 +1,52 @@
 from django.shortcuts import render
-from .models import MCQQuestion, Result
 from django.views.decorators.csrf import csrf_exempt
+
+from .models import MCQQuestion
+from .tasks import save_result_to_cache
+
 
 @csrf_exempt
 def mcq_list(request):
+
     questions = MCQQuestion.objects.all()
 
-    if request.method == 'POST':
+    if request.method == "POST":
+
         score = 0
-        user_id = request.POST.get('user_id')
-        total_questions = questions.count()
+
+        user_id = request.POST.get(
+            "user_id"
+        )
 
         for question in questions:
-             
-            post_key = f"question_{question.id}"
-            
-            user_answer = request.POST.get(post_key)
 
-            # Compare user input with the correct database answer
-            if user_answer == question.correct_answer:
+            post_key = (
+                f"question_{question.id}"
+            )
+
+            user_answer = request.POST.get(
+                post_key
+            )
+
+            if (
+                user_answer
+                == question.correct_answer
+            ):
                 score += 1
-        
-        try:
-            Result.objects.create(stu_id= user_id, score=score)
-            print('result added')
-        except Exception as e:
-            print(e)
 
-        return render(request, 'mcq_questions.html', {
-            'score': score,
-            'total': total_questions
-        })
+        # Send to Redis Queue
+        save_result_to_cache.delay(
+            user_id,
+            score
+        )
 
-    return render(request, 'mcq_questions.html', {'questions': questions})
+        return render(
+            request,
+            "mcq_questions.html"
+        )
+
+    return render(
+        request,
+        "mcq_questions.html",
+        {"questions": questions}
+    )
