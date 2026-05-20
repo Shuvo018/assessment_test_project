@@ -17,7 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from mcq_app import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', view=views.mcq_list, name='mcq_list'),
+    path('mcq/', view=views.mcq_list, name='mcq_list'),
+    path('result/', view=views.resutl_list, name='result'),
 ]
