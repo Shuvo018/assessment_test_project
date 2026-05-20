@@ -4,7 +4,7 @@ from django.core.cache import cache
 from django_redis import get_redis_connection
 
 
-from .utils import get_questions  # reuse your existing cache
+from .utils import get_questions
 
 @shared_task
 def score_and_save(stu_id, answers: dict):
@@ -19,7 +19,6 @@ def score_and_save(stu_id, answers: dict):
     redis.rpush("mcq_results", f"{stu_id}:{score}")
 
 from .models import Result
-
 
 @shared_task
 def bulk_insert_results():
